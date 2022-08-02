@@ -14,7 +14,10 @@ class TicketFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->words(5, true),
+            'description' => $this->faker->text(200),
+            'status' => (int) $this->faker->boolean(),
+            'created_at' => now()
         ];
     }
 }
