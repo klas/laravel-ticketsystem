@@ -10,15 +10,22 @@ use Illuminate\Validation\Rule;
 
 class TicketController extends Controller
 {
+    protected $ticketRepository;
+
+    public function __construct(TicketRepository $ticketRepository)
+    {
+        $this->ticketRepository = $ticketRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    public function index(TicketRepository $repository)
+    public function index()
     {
         return view('tickets', [
-            'tickets' => $repository->all()
+            'tickets' => $this->ticketRepository->all()
         ]);
     }
 
@@ -46,7 +53,7 @@ class TicketController extends Controller
         ]);
 
 
-        Ticket::create($validatedData);
+        $this->ticketRepository->create($validatedData);
 
         return redirect('/')->with('status', 'Blog Post Form Data Has Been inserted');
     }
@@ -60,7 +67,7 @@ class TicketController extends Controller
     public function show($id)
     {
         return view('ticket', [
-            'ticket' => Ticket::findOrFail($id)
+            'ticket' => $this->ticketRepository->getById($id)
         ]);
     }
 
