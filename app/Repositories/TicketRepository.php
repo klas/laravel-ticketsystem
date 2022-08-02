@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
-//use Your Model
+use App\Models\Ticket;
 
 /**
  * Class TicketRepository.
@@ -16,6 +16,6 @@ class TicketRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Ticket::class;
     }
 }

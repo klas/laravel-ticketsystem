@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Repositories\TicketRepository;
 use App\Models\Ticket;
 use Illuminate\Validation\Rule;
 
@@ -14,10 +15,10 @@ class TicketController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(TicketRepository $repository)
     {
         return view('tickets', [
-            'tickets' => Ticket::all()
+            'tickets' => $repository->all()
         ]);
     }
 
