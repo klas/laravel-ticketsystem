@@ -6,6 +6,9 @@ use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Repositories\TicketRepository;
 use App\Models\Ticket;
+use Illuminate\Http\Request;
+
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class TicketController extends Controller
@@ -25,7 +28,7 @@ class TicketController extends Controller
     public function index()
     {
         return view('tickets', [
-            'tickets' => $this->ticketRepository->all()
+            'tickets' => $this->ticketRepository->paginate(10)
         ]);
     }
 
@@ -36,7 +39,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return view('ticket-form');
+        return view('ticket-form', [
+            'ticket' => new Ticket()
+        ]);
     }
 
     /**
@@ -44,18 +49,24 @@ class TicketController extends Controller
      *
      * @param  \App\Http\Requests\StoreTicketRequest  $request
      */
-    public function store(StoreTicketRequest $request)
+    public function store(StoreTicketRequest $request, Ticket $ticket)
     {
         $validatedData = $request->validate([
-            'title' => ['required',Rule::unique('tickets', 'title'), 'max:255'],
+            'title' => ['required', 'max:255'],
             'description' => ['required', 'max:255'],
             'status' => ['required', 'numeric', 'integer'],
         ]);
 
+        if ((int)$ticket->id > 0)
+        {
+            $this->ticketRepository->updateById((int)$ticket->id, $validatedData);
+        }
+        else{
+            $this->ticketRepository->create($validatedData);
+        }
 
-        $this->ticketRepository->create($validatedData);
 
-        return redirect('/')->with('status', 'Blog Post Form Data Has Been inserted');
+        return redirect('/')->with('status', 'Ticket Has Been inserted/updated');
     }
 
     /**
@@ -64,10 +75,10 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Ticket $ticket)
     {
         return view('ticket', [
-            'ticket' => $this->ticketRepository->getById($id)
+            'ticket' => $ticket
         ]);
     }
 
@@ -75,11 +86,13 @@ class TicketController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Ticket $ticket)
     {
-        //
+        return view('ticket-form', [
+            'ticket' => $ticket
+        ]);
     }
 
     /**
@@ -97,11 +110,13 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Ticket  $ticket
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Request $request, Ticket $ticket)
     {
-        //
+        $ticket->delete();
+
+        return redirect('/')->with('status', 'Ticket has been deleted');
     }
 }

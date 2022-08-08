@@ -15,10 +15,13 @@ use App\Http\Controllers\TicketController;
 */
 
 Route::get('/', [TicketController::class, 'index']);
-Route::get('/ticket/{id}', [TicketController::class, 'show']);
+Route::get('/ticket/create', [TicketController::class, 'create']);//->middleware('auth');
+Route::post('/ticket/store/{ticket}', [TicketController::class, 'store']);//->middleware('auth');
+Route::get('/ticket/edit/{ticket}', [TicketController::class, 'edit']);
+Route::get('/ticket/{ticket}', [TicketController::class, 'show']);
+Route::get('/ticket/delete/{ticket}', [TicketController::class, 'destroy']);
 
-Route::get('create', [TicketController::class, 'create'])->middleware('auth');;
-Route::post('store-form', [TicketController::class, 'store'])->middleware('auth');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
