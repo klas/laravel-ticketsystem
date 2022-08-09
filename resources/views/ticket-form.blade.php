@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" class="@error('title') is-invalid @enderror form-control"
-                       value="{{ $ticket->title }}">
+                       value="{{ old('title', $ticket->title) }}">
                 @error('title')
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" class="@error('title') is-invalid @enderror form-control"
-                >{{ $ticket->description }}</textarea>
+                >{{ old('description', $ticket->description) }}</textarea>
                 @error('description')
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" id="status" name="status" class="@error('title') is-invalid @enderror form-control"
-                       value="{{ $ticket->status }}">
+                       value="{{ old('status', $ticket->status) }}">
                 @error('status')
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror

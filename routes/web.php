@@ -17,6 +17,7 @@ use App\Http\Controllers\TicketController;
 Route::get('/', [TicketController::class, 'index']);
 Route::get('/ticket/create', [TicketController::class, 'create']);//->middleware('auth');
 Route::post('/ticket/store/{ticket}', [TicketController::class, 'store']);//->middleware('auth');
+Route::post('/ticket/store', [TicketController::class, 'store']);//->middleware('auth');
 Route::get('/ticket/edit/{ticket}', [TicketController::class, 'edit']);
 Route::get('/ticket/{ticket}', [TicketController::class, 'show']);
 Route::get('/ticket/delete/{ticket}', [TicketController::class, 'destroy']);

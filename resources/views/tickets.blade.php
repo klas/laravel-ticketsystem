@@ -4,7 +4,10 @@
     </x-slot>
 <div class="row">
     <div class="col-12">
-        <h2>Tickets</h2>
+        <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+            <a class="btn btn-primary mb-2 mb-md-0" href="/ticket/create" title="Add Ticket" target="_blank" rel="noopener">Add Ticket</a>
+            <h2>Tickets</h2>
+        </div>
 
         <table class="table table-striped">
             <thead>
@@ -24,7 +27,8 @@
             </tbody>
 
         </table>
-        <a href="/ticket/create" class="btn btn-primary mt-3">Add Ticket</a>
+
+        {!! $tickets->links() !!}
     </div>
 </div>
 </x-body>

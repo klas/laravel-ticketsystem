@@ -110,12 +110,12 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Ticket  $ticket
+     * @param  Request  $request
+     * @param  Ticket  $ticket
      */
     public function destroy(Request $request, Ticket $ticket)
     {
-        $ticket->delete();
+        $this->ticketRepository->deleteById($ticket->id);
 
         return redirect('/')->with('status', 'Ticket has been deleted');
     }
