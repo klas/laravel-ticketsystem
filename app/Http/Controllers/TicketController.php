@@ -16,6 +16,7 @@ class TicketController extends Controller
 {
     protected $ticketRepository;
     protected $userRepository;
+    protected $statuses = [1 => 'Published', 0 => 'Unpublished'];
 
     public function __construct(TicketRepository $ticketRepository, UserRepository $userRepository)
     {
@@ -46,7 +47,8 @@ class TicketController extends Controller
             'ticket' => new Ticket(),
             'users' => $this->userRepository->all(['id', 'name'])->mapWithKeys(function ($item, $key) {
                 return [$item['id'] => $item['name']];
-            })
+            }),
+            'statuses' => $this->statuses
         ]);
     }
 
@@ -101,7 +103,8 @@ class TicketController extends Controller
             'ticket' => $ticket,
             'users' => $this->userRepository->all(['id', 'name'])->mapWithKeys(function ($item, $key) {
                 return [$item['id'] => $item['name']];
-            })
+            }),
+            'statuses' => $this->statuses
         ]);
     }
 

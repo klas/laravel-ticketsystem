@@ -35,15 +35,14 @@
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
             </div>
-            @endbind
             <div class="form-group">
                 <label for="status">Status</label>
-                <input type="text" id="status" name="status" class="@error('title') is-invalid @enderror form-control"
-                       value="{{ old('status', $ticket->status) }}">
+                <x-form-select name="status" :options="$statuses" />
                 @error('status')
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
             </div>
+            @endbind
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
     </div>
