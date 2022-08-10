@@ -10,4 +10,12 @@ class Ticket extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    /**
+     * Get the user that created the ticket.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Repositories\TicketRepository;
+use App\Repositories\UserRepository;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
