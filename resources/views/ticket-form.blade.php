@@ -27,6 +27,15 @@
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
             </div>
+            @bind($ticket)
+            <div class="form-group">
+                <label for="user_id">Created By</label>
+                <x-form-select name="user_id" :options="$users" value="{{ old('user_id', $ticket->user_id) }}" />
+                @error('user_id')
+                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                @enderror
+            </div>
+            @endbind
             <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" id="status" name="status" class="@error('title') is-invalid @enderror form-control"

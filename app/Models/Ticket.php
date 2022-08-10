@@ -14,7 +14,7 @@ class Ticket extends Model
     /**
      * Get the user that created the ticket.
      */
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
     }

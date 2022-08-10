@@ -8,6 +8,9 @@
             <h2>{{ $ticket->title }}</h2>
         </div>
         <div class="col-12">
+            <h3>By {{ $ticket->user->name }}</h3>
+        </div>
+        <div class="col-12">
             {{ $ticket->description }}
         </div>
     </div>

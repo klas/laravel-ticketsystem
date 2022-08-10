@@ -15,10 +15,12 @@ use Illuminate\Validation\Rule;
 class TicketController extends Controller
 {
     protected $ticketRepository;
+    protected $userRepository;
 
-    public function __construct(TicketRepository $ticketRepository)
+    public function __construct(TicketRepository $ticketRepository, UserRepository $userRepository)
     {
         $this->ticketRepository = $ticketRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -41,7 +43,10 @@ class TicketController extends Controller
     public function create()
     {
         return view('ticket-form', [
-            'ticket' => new Ticket()
+            'ticket' => new Ticket(),
+            'users' => $this->userRepository->all(['id', 'name'])->mapWithKeys(function ($item, $key) {
+                return [$item['id'] => $item['name']];
+            })
         ]);
     }
 
@@ -56,6 +61,7 @@ class TicketController extends Controller
             'title' => ['required', 'max:255'],
             'description' => ['required', 'max:255'],
             'status' => ['required', 'numeric', 'integer'],
+            'user_id' => ['required', 'numeric', 'integer'],
         ]);
 
         if ((int)$ticket->id > 0)
@@ -92,7 +98,10 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         return view('ticket-form', [
-            'ticket' => $ticket
+            'ticket' => $ticket,
+            'users' => $this->userRepository->all(['id', 'name'])->mapWithKeys(function ($item, $key) {
+                return [$item['id'] => $item['name']];
+            })
         ]);
     }
 
