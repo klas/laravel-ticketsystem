@@ -18,4 +18,9 @@ class UserRepository extends BaseRepository
     {
         return User::class;
     }
+
+    public function firstOrCreate($data)
+    {
+        return User::firstOrCreate($data);
+    }
 }

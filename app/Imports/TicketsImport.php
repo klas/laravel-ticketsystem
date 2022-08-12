@@ -3,19 +3,40 @@
 namespace App\Imports;
 
 use App\Models\Ticket;
-use Maatwebsite\Excel\Concerns\ToModel;
+use App\Repositories\TicketRepository;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-class TicketsImport implements ToModel
+class TicketsImport implements ToCollection
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+    protected $ticketRepository;
+    protected $userRepository;
+
+    public function __construct(TicketRepository $ticketRepository, UserRepository $userRepository)
     {
-        return new Ticket([
-            //
-        ]);
+        $this->ticketRepository = $ticketRepository;
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @param  Collection  $collection
+     */
+    public function collection(Collection $collection)
+    {
+        foreach ($collection as $row)
+        {
+            $user = $this->userRepository->firstOrCreate([
+
+            ]);
+
+
+            $this->ticketRepository->create([
+                'title' => $row['title'],
+                'description' => $row['title'],
+                'status' => $row['title'],
+                'user_id' => $user->id,
+            ]);
+        }
     }
 }

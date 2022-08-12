@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\TicketsImport;
 use Illuminate\Console\Command;
+use Maatwebsite\Excel\Excel;
 
 class importTickets extends Command
 {
+    const FILEPATH = 'var/imports/tickets.csv';
     /**
      * The name and signature of the console command.
      *
@@ -35,8 +38,10 @@ class importTickets extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(TicketsImport $ticketsImport)
     {
-        return 0;
+        Excel::import($ticketsImport, self::FILEPATH);
+
+        $this->line("Import finished");
     }
 }
